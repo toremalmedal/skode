@@ -1,14 +1,21 @@
 import requests
+
+from config import *
+
 def get_coordinates(location):
     params = dict(
         navn=location
     )
 
+    headers = {
+    'User-Agent': USER_AGENT,
+    }
+
     url = 'https://ws.geonorge.no/SKWS3Index/ssr/json/sok?'
-    resp = requests.get(url=url, params=params)
+    resp = requests.get(url=url, params=params, headers=headers)
     return resp.json()
 
-def list_locations(location):
+def location_list(location):
     locations = get_coordinates(location)
     hits = int(locations.get('totaltAntallTreff'))
 
@@ -25,9 +32,6 @@ def list_locations(location):
         for location in locations.get('stedsnavn'):
             pretty.append(location)
     return pretty
-
-#Put this in conf, my dude
-useragent = "skode github.com/toremalmedal/skode"
 
 #Status codes from YR. 
 
@@ -48,7 +52,18 @@ useragent = "skode github.com/toremalmedal/skode"
 # We only support encrypted HTTPS for security reasons.
 # All clients must support redirects and gzip compression (Accept-Encoding: gzip, deflate) as described in RFC 2616.
 
+def get_basic_forecast(lat, lon):
+    #TODO: Check expire time from last request, to see if we should make new request    
+    
+    params = dict(
+        lat=lat,
+        lon=lon
+    )
 
-#def get_basic_forecast(altitude, lat, lon):
-    #Check expire time from last request, to see if we should make new request:    
-    #https://api.met.no/weatherapi/locationforecast/2.0/#!/data/get_compact_format
+    headers = {
+    'User-Agent': USER_AGENT,
+    }
+
+    url = 'https://api.met.no/weatherapi/locationforecast/2.0/#!/data/get_compact_format'
+    resp = requests.get(url=url, params=params, headers=headers)
+    return resp.json()
