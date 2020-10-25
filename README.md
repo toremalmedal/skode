@@ -1,5 +1,8 @@
 # skode
-Eit dæsbjbård for norske forhold. Eit påskot for å lage CLI i python og dei bibliotek knytta til slikt.
+Eit dæsbjbård for norske forhold. Eit påskot for å lage CLI / TUI i python og dei bibliotek knytta til slikt.
+
+interessante bibliotek: 
+urwid - anbefalt av curses om du er kravstor.
 
 
 ## Språk
